@@ -271,4 +271,12 @@ DTS_LIBS="-ldca $LIBM"
 AC_SUBST(DTS_LIBS)
 AM_CONDITIONAL(HAVE_DTSDOWNMIX, test "$have_dtsdownmix" = "yes")
 
+AC_ARG_WITH(aactranscode,
+	AS_HELP_STRING([--with-aactranscode],[build aac transcode element, yes or no]),
+	[have_aactranscode=$withval],[have_aactranscode=no])
+if test "$have_aactranscode" = "yes"; then
+	AC_DEFINE([HAVE_AACTRANSCODE],[1],[Define to 1 for AAC transcoding support])
+fi
+AM_CONDITIONAL(HAVE_AACTRANSCODE, test "$have_aactranscode" = "yes")
+
 AC_OUTPUT(Makefile)

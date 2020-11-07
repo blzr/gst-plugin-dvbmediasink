@@ -31,7 +31,7 @@ libgstdvbaudiosink_la_LIBADD = $(GST_LIBS) -lgstbase-$(GST_MAJORMINOR)
 libgstdvbaudiosink_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
 
 # headers we need but don't want installed
-noinst_HEADERS = gstdvbvideosink.h gstdvbaudiosink.h gstdtsdownmix.h gstmpeg4p2unpack.h
+noinst_HEADERS = gstdvbvideosink.h gstdvbaudiosink.h gstdtsdownmix.h gstmpeg4p2unpack.h gstaactranscode.h
 
 plugin_LTLIBRARIES += libgstmpeg4p2unpack.la
 
@@ -49,4 +49,19 @@ libgstdtsdownmix_la_SOURCES = gstdtsdownmix.c
 libgstdtsdownmix_la_CFLAGS = $(GST_CFLAGS)
 libgstdtsdownmix_la_LIBADD = $(GST_LIBS) -lgstbase-$(GST_MAJORMINOR) $(DTS_LIBS)
 libgstdtsdownmix_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+endif
+
+if HAVE_AACTRANSCODE
+plugin_LTLIBRARIES += libgstaactranscode.la
+
+libgstaactranscode_la_SOURCES = gstaactranscode.c
+
+libgstaactranscode_la_CFLAGS = $(GST_CFLAGS) -DSYSCONFDIR='"$(sysconfdir)"'
+libgstaactranscode_la_LIBADD = $(GST_LIBS) -lgstbase-$(GST_MAJORMINOR)
+libgstaactranscode_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+
+libgstdvbaudiosink_la_CFLAGS += -DSYSCONFDIR='"$(sysconfdir)"'
+
+aactranscodedir = $(sysconfdir)/gstreamer
+aactranscode_DATA = aactranscode
 endif
